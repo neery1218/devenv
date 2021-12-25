@@ -31,3 +31,6 @@ cp .tmux.conf ~/.tmux.conf
 
 mkdir -p ~/.config/nvim
 cp -r nvim/* ~/.config/nvim/
+
+# install vim-plug and coc plugins
+nvim -s setup.vim
