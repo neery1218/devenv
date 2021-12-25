@@ -8,7 +8,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 if [[ "$(uname)" == "Linux" ]]; then
-	sudo apt install neovim fzf ag
+	sudo apt install neovim fzf silversearcher-ag
 fi
 
 # my config files
