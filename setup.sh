@@ -8,8 +8,23 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 if [[ "$(uname)" == "Linux" ]]; then
-	sudo apt install neovim fzf silversearcher-ag
+	sudo apt-get update
+	sudo apt-get install -y \
+	    apt-transport-https \
+	    curl \
+	    software-properties-common \
+	    neovim \
+	    fzf \
+	    silversearcher-ag \
+	    build-essential \
+	    ccls
 fi
+
+# install node
+echo "Installing node..."
+# installing from source takes too long (especially on aws micro instances) so lets do this instead
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 # my config files
 cp .tmux.conf ~/.tmux.conf
