@@ -34,5 +34,8 @@ cp -r nvim/* ~/.config/nvim/
 
 git config --global core.editor "nvim"
 
+# install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # install vim-plug and coc plugins
 nvim -s setup.vim
