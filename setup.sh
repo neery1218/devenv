@@ -18,6 +18,8 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    silversearcher-ag \
 	    build-essential \
 	    ccls
+        sudo apt-get install apt-transport-https ca-certificates gnupg
+        sudo apt-get install google-cloud-sdk
 fi
 
 # install node
@@ -36,6 +38,8 @@ git config --global core.editor "nvim"
 
 # install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+pip install -r requirements.txt
 
 # install vim-plug and coc plugins
 nvim -s setup.vim

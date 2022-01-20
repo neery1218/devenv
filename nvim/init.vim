@@ -4,30 +4,44 @@ Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'overcache/NeoSolarized'
+Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
+Plug 'terryma/vim-expand-region'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'lifepillar/vim-solarized8'
 
 " Language settings
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'timonv/vim-cargo'
-
+Plug 'Yggdroot/indentLine'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'airblade/vim-rooter'
 call plug#end()
 
-colorscheme NeoSolarized
+set termguicolors
 set background=light
+colorscheme solarized8_flat
 set number
 
 " Edit vimrc
-nnoremap <Leader>ve :e $MYVIMRC<CR>
+nnoremap <Leader>ce :e $MYVIMRC<CR>
 " Reload vimrc
-nnoremap <Leader>vr :source $MYVIMRC<CR>
+nnoremap <Leader>cr :source $MYVIMRC<CR>
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='solarized'
+
+" Ctrl+g to stop searching
+nnoremap <C-a> :nohlsearch<cr>
 
 " Internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -87,17 +101,18 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [e <Plug>(coc-diagnostic-prev)
+nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
+nmap gds :sp<CR> <Plug>(coc-definition)
+nmap gdv :vsp<CR> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> T :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -135,11 +150,11 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>e  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>a  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>co  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
@@ -169,7 +184,7 @@ set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
-set colorcolumn=120 " and give me a colored column
+" set colorcolumn=120 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
@@ -178,10 +193,52 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 
+" Pane switching
+map <C-L> <C-W>l
+map <C-h> <C-W>h
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+
 map <S-L> <C-W>l
 map <S-h> <C-W>h
 map <S-j> <C-W>j
 map <S-k> <C-W>k
 
+" resizing
+" map <S-+> <C-W>+
+" map <S--> <C-W>-
+" map <S->> <C-W>>
+" map <S-k> <C-W><
+
 map y1 :sp <Bar> :vsp <Bar> :resize +15<CR>
 map y2 :vsp <Bar> :vsp<CR>
+
+
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+" Leader based shortcuts
+let mapleader = "\<Space>"
+map <Leader>w :w<CR>
+
+map <Leader>f :Files<CR>
+map <Leader>te :execute "lcd" g:initial_root_directory <Bar> :terminal<CR>
+map <Leader>tb :tabnew<CR>
+map <Leader>v :vsp<CR>
+map <Leader>s :sp<CR>
+
+
+set expandtab shiftwidth=2
+
+autocmd FileType scss setl iskeyword+=@-@
+let g:coc_disable_transparent_cursor = 1
+
+" rooter
+let g:rooter_patterns = ['Cargo.toml']
+let g:rooter_cd_cmd = 'lcd'
+
+if !exists("g:initial_root_directory")
+  let g:initial_root_directory = system('pwd')
+endif
+
+let $FZF_DEFAULT_COMMAND = 'ag -g "" ' . g:initial_root_directory
