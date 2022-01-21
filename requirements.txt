@@ -2,3 +2,4 @@ pandas
 dask
 pandas-gbq
 virtualenv
+jupyterlab
