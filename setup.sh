@@ -18,8 +18,8 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    silversearcher-ag \
 	    build-essential \
 	    ccls
-        sudo apt-get install apt-transport-https ca-certificates gnupg
-        sudo apt-get install google-cloud-sdk
+        sudo apt-get install -y apt-transport-https ca-certificates gnupg
+        sudo apt-get install -y google-cloud-sdk
 fi
 
 # install node
