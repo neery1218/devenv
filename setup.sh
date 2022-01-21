@@ -49,6 +49,7 @@ git config --global core.editor "nvim"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh
 source rust-install.sh -y
 
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
 # install vim-plug and coc plugins
