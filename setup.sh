@@ -49,6 +49,11 @@ git config --global core.editor "nvim"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh
 source rust-install.sh -y
 
+# install golang
+wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
