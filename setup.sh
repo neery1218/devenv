@@ -2,7 +2,10 @@
 set -ex
 
 # Tmux plugin manager
+if [ ! -d ~/.tmux/plugins/tmp ]
+then
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 # vim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
