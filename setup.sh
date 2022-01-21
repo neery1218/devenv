@@ -51,7 +51,7 @@ source rust-install.sh -y
 # install golang
 wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+sudo ln -s /usr/local/go/bin/go /usr/bin/go
 
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
