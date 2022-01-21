@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 # Tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -17,8 +18,8 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    fzf \
 	    silversearcher-ag \
 	    build-essential \
-	    ccls \
 	    wget
+	    
         sudo apt-get install -y apt-transport-https ca-certificates gnupg
         sudo apt-get install -y google-cloud-sdk python3 python3-dev python3-venv
 fi
