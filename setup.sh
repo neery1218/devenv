@@ -42,7 +42,8 @@ cp -r nvim/* ~/.config/nvim/
 git config --global core.editor "nvim"
 
 # install rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh
+source rust-install.sh -y
 
 pip install -r requirements.txt
 
