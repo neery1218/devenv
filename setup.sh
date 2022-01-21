@@ -64,5 +64,9 @@ chmod u+x nvim.appimage
 mv squashfs-root /
 ln -s /squashfs-root/AppRun /usr/bin/nvim
 
+cd ~/.vim/plugged/vim-hexokinase
+make hexokinase
+cd -
+
 # install vim-plug and coc plugins
 nvim -s setup.vim
