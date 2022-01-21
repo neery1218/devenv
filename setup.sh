@@ -24,12 +24,12 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    wget
 	    
         sudo apt-get install -y apt-transport-https ca-certificates gnupg
-        sudo apt-get install -y google-cloud-sdk python3 python3-dev python3-venv
+        sudo apt-get install -y google-cloud-sdk python3 python3-dev python3-venv python3-pip
 fi
 
 # install python
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python3 get-pip.py
+# wget https://bootstrap.pypa.io/get-pip.py
+# sudo python3 get-pip.py
 
 # install node
 echo "Installing node..."
