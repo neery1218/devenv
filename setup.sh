@@ -20,7 +20,9 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    fzf \
 	    silversearcher-ag \
 	    build-essential \
-	    wget
+	    wget \
+	    tmux \
+	    htop
 	    
         sudo apt-get install -y apt-transport-https ca-certificates gnupg
         sudo apt-get install -y google-cloud-sdk python3 python3-dev python3-venv python3-pip
