@@ -17,7 +17,6 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    apt-transport-https \
 	    curl \
 	    software-properties-common \
-	    neovim \
 	    fzf \
 	    silversearcher-ag \
 	    build-essential \
@@ -56,6 +55,14 @@ export PATH=$PATH:/usr/local/go/bin
 
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
+
+# install neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+./nvim.appimage --appimage-extract
+./squashfs-root/AppRun --version
+mv squashfs-root /
+ln -s /squashfs-root/AppRun /usr/bin/nvim
 
 # install vim-plug and coc plugins
 nvim -s setup.vim
