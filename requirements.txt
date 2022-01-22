@@ -3,3 +3,4 @@ dask
 pandas-gbq
 virtualenv
 jupyterlab
+jupyter_contrib_nbextensions
