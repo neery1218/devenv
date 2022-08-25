@@ -1,5 +1,9 @@
 {
   "languageserver": {
+    "move": {
+      "command": "move-analyzer",
+      "filetypes": ["move"],
+    },
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "objc", "objcpp"],
@@ -19,5 +23,14 @@
   },
   "python.pythonPath": "/opt/homebrew/bin/python3",
   "python.formatting.provider": "black",
-  "python.formatting.autopep8Args": ["--aggressive"]
+  "python.formatting.autopep8Args": ["--aggressive"],
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.checkOnSave.allTargets": true,
+  "suggest.maxCompleteItemCount": 10
 }

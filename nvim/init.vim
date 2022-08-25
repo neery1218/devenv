@@ -1,47 +1,42 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'overcache/NeoSolarized'
-Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'sheerun/vim-polyglot'
 Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-Plug 'terryma/vim-expand-region'
+Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'lifepillar/vim-solarized8'
+" Plug 'puremourning/viminspector'
+Plug 'morhetz/gruvbox'
+Plug 'terryma/vim-expand-region'
+" Plug 'MaxMEllon/vim-jsx-pretty'
 
 " Language settings
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'rvmelkonian/move.vim'
+
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'timonv/vim-cargo'
-Plug 'Yggdroot/indentLine'
+
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'airblade/vim-rooter'
 call plug#end()
 
 set termguicolors
-set background=light
-colorscheme solarized8_flat
-set number
-
-" Edit vimrc
-nnoremap <Leader>ce :e $MYVIMRC<CR>
-" Reload vimrc
-nnoremap <Leader>cr :source $MYVIMRC<CR>
+set background=dark
+colorscheme gruvbox
 
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
+let g:airline_theme='base16_mocha'
 
-" Ctrl+g to stop searching
-nnoremap <C-a> :nohlsearch<cr>
 
 " Internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -87,6 +82,9 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" =============================================================================
+" # COC settings
+" =============================================================================
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -99,40 +97,47 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [e <Plug>(coc-diagnostic-prev)
-nmap <silent> ]e <Plug>(coc-diagnostic-next)
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
+inoremap <silent><expr> <C-y> coc#pum#visible() ? coc#pum#cancel() : "\<C-y>"
+
+" Coc diagnostics
+nmap <silent> [e <Plug>(coc-diagnostic-prev-error)
+nmap <silent> ]e <Plug>(coc-diagnostic-next-error)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
+nmap <silent> gdo <Plug>(coc-definition)
 nmap gds :sp<CR> <Plug>(coc-definition)
 nmap gdv :vsp<CR> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap rn <Plug>(coc-rename)
 
-" Use K to show documentation in preview window.
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use T to show documentation in preview window.
 nnoremap <silent> T :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+  call CocActionAsync('doHover')
+  " if (index(['vim','help'], &filetype) >= 0)
+  "   execute 'h '.expand('<cword>')
+  " elseif (coc#rpc#ready())
+  "   call CocActionAsync('doHover')
+  " else
+  "   execute '!' . &keywordprg . " " . expand('<cword>')
+  " endif
 endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -158,13 +163,16 @@ nnoremap <silent><nowait> <space>co  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>x  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Markdown preview
+map <Leader>m :CocCommand markdown-preview-enhanced.openPreview <CR>
+map <Leader>me :vsp <Bar> :CocCommand rust-analyzer.expandMacro <CR>
 
 " =============================================================================
 " # GUI settings
@@ -178,7 +186,7 @@ set ttyfast
 set lazyredraw
 set synmaxcol=500
 set laststatus=2
-set relativenumber " Relative line numbers
+" set relativenumber " Relative line numbers
 set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
@@ -193,7 +201,39 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 
-" Pane switching
+" =============================================================================
+" # Misc shortcuts
+" =============================================================================
+"
+let mapleader = "\<Space>"
+map <Leader>w :w<CR>
+noremap <C-y> "*y
+
+" Visual selection
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+map <Leader>gt :GitGutterToggle <Bar> :set number! <CR>
+
+" maybe i should delete these lmao
+set expandtab shiftwidth=2
+autocmd FileType scss setl iskeyword+=@-@
+
+set number
+
+" Edit vimrc
+nnoremap <Leader>ce :e $MYVIMRC<CR>
+" Reload vimrc
+nnoremap <Leader>cr :source $MYVIMRC<CR>
+
+" Ctrl+g to stop searching
+nnoremap <C-a> :nohlsearch<cr>
+
+
+" =============================================================================
+" # Pane settings
+" =============================================================================
+"
 map <C-L> <C-W>l
 map <C-h> <C-W>h
 map <C-j> <C-W>j
@@ -204,41 +244,52 @@ map <S-h> <C-W>h
 map <S-j> <C-W>j
 map <S-k> <C-W>k
 
-" resizing
-" map <S-+> <C-W>+
-" map <S--> <C-W>-
-" map <S->> <C-W>>
-" map <S-k> <C-W><
-
+" =============================================================================
+" # Split settings
+" =============================================================================
+"
+set splitright
+set splitbelow
 map y1 :sp <Bar> :vsp <Bar> :resize +15<CR>
 map y2 :vsp <Bar> :vsp<CR>
-
-
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
-" Leader based shortcuts
-let mapleader = "\<Space>"
-map <Leader>w :w<CR>
-
-map <Leader>f :Files<CR>
-map <Leader>te :execute "lcd" g:initial_root_directory <Bar> :terminal<CR>
-map <Leader>tb :tabnew<CR>
 map <Leader>v :vsp<CR>
 map <Leader>s :sp<CR>
 
 
-set expandtab shiftwidth=2
+" =============================================================================
+" # Terminal shortcuts
+" =============================================================================
 
-autocmd FileType scss setl iskeyword+=@-@
-let g:coc_disable_transparent_cursor = 1
+map <Leader>tk :execute "lcd" g:initial_root_directory <Bar> :vs term://zsh <CR>
+map <Leader>th :execute "lcd" g:initial_root_directory <Bar> :sp term://zsh <CR>
+map <Leader>tl :vs term://zsh <CR>
+map <Leader>tj :sp term://zsh <CR>
 
-" rooter
-let g:rooter_patterns = ['Cargo.toml']
+map <Leader>tb :tabnew<CR>
+
+" let g:coc_disable_transparent_cursor = 1
+
+" =============================================================================
+" # FZF shortcuts
+" =============================================================================
+let g:fzf_preview_window = ['right:50%']
+let $FZF_DEFAULT_COMMAND = 'ag -U -g "" ' . g:initial_root_directory
+map <Leader>af :call fzf#run(fzf#wrap({'options': ['--preview', 'cat {}'], 'source': 'ag -u -g "" ' . g:initial_root_directory}))<CR>
+map <Leader>f :call fzf#run(fzf#wrap({'options': ['--preview', 'cat {}'], 'source': 'ag -g "" ' . g:initial_root_directory}))<CR>
+
+" =============================================================================
+" # Rooter Settings
+" =============================================================================
+let g:rooter_patterns = ['Move.toml', '.git', 'Cargo.toml']
 let g:rooter_cd_cmd = 'lcd'
-
 if !exists("g:initial_root_directory")
   let g:initial_root_directory = system('pwd')
 endif
 
-let $FZF_DEFAULT_COMMAND = 'ag -g "" ' . g:initial_root_directory
+
+" =============================================================================
+" # NERDTree Settings
+" =============================================================================
+let g:NERDTreeWinSize=50
+map <Leader>nf :NERDTreeFind <CR>
+map <Leader>nc :NERDTreeClose <CR>
