@@ -25,7 +25,7 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    htop
 	    
         sudo apt-get install -y apt-transport-https ca-certificates gnupg
-        sudo apt-get install -y google-cloud-sdk python3 python3-dev python3-venv python3-pip
+        sudo apt-get install -y python3 python3-dev python3-venv python3-pip
 fi
 
 # install python
@@ -51,9 +51,9 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh
 source rust-install.sh -y
 
 # install golang
-wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
-sudo ln -s /usr/local/go/bin/go /usr/bin/go
+# wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
+# sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
+# sudo ln -s /usr/local/go/bin/go /usr/bin/go
 
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
