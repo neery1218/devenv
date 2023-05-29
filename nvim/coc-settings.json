@@ -2,7 +2,7 @@
   "languageserver": {
     "move": {
       "command": "move-analyzer",
-      "filetypes": ["move"],
+      "filetypes": ["move"]
     },
     "ccls": {
       "command": "ccls",
@@ -30,7 +30,9 @@
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.enumMemberValues.enabled": true,
-  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.cargo.features": "all",
   "rust-analyzer.checkOnSave.allTargets": true,
-  "suggest.maxCompleteItemCount": 10
+  "rust-analyzer.server.path": "/Users/neerajensritharan/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer",
+  "suggest.maxCompleteItemCount": 10,
+  "suggest.maxPreviewWidth": 80
 }

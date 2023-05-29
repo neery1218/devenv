@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'preservim/nerdtree'
+Plug 'github/copilot.vim'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -19,6 +20,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'morhetz/gruvbox'
 Plug 'terryma/vim-expand-region'
 " Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'shortcuts/no-neck-pain.nvim', { 'tag': '*' }
 
 " Language settings
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -71,10 +73,10 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -98,7 +100,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
+" inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
 inoremap <silent><expr> <C-y> coc#pum#visible() ? coc#pum#cancel() : "\<C-y>"
 
 " Coc diagnostics
@@ -117,10 +119,10 @@ nmap <silent> gr <Plug>(coc-references)
 nmap rn <Plug>(coc-rename)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap qf  <Plug>(coc-codeaction)
 
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap qf  <Plug>(coc-fix-current)
 
 " Use T to show documentation in preview window.
 nnoremap <silent> T :call <SID>show_documentation()<CR>
@@ -157,9 +159,9 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>e  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList extensions<cr>
+" nnoremap <silent><nowait> <space>a  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>co  :<C-u>CocList commands<cr>
+" nnoremap <silent><nowait> <space>co  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
@@ -171,8 +173,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Markdown preview
-map <Leader>m :CocCommand markdown-preview-enhanced.openPreview <CR>
-map <Leader>me :vsp <Bar> :CocCommand rust-analyzer.expandMacro <CR>
+" map <Leader>m :CocCommand markdown-preview-enhanced.openPreview <CR>
+map <space>me :vsp <Bar> :CocCommand rust-analyzer.expandMacro <CR>
 
 " =============================================================================
 " # GUI settings
@@ -226,8 +228,14 @@ nnoremap <Leader>ce :e $MYVIMRC<CR>
 " Reload vimrc
 nnoremap <Leader>cr :source $MYVIMRC<CR>
 
+if !exists("g:initial_root_directory")
+  let g:initial_root_directory = system('pwd')
+endif
+
 " Ctrl+g to stop searching
 nnoremap <C-a> :nohlsearch<cr>
+
+let g:copilot_assume_mapped = 1
 
 
 " =============================================================================
@@ -282,9 +290,6 @@ map <Leader>f :call fzf#run(fzf#wrap({'options': ['--preview', 'cat {}'], 'sourc
 " =============================================================================
 let g:rooter_patterns = ['Move.toml', '.git', 'Cargo.toml']
 let g:rooter_cd_cmd = 'lcd'
-if !exists("g:initial_root_directory")
-  let g:initial_root_directory = system('pwd')
-endif
 
 
 " =============================================================================
@@ -293,3 +298,7 @@ endif
 let g:NERDTreeWinSize=50
 map <Leader>nf :NERDTreeFind <CR>
 map <Leader>nc :NERDTreeClose <CR>
+
+set foldmethod=syntax
+
+let g:airline_section_b = ''
