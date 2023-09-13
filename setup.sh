@@ -22,10 +22,13 @@ if [[ "$(uname)" == "Linux" ]]; then
 	    build-essential \
 	    wget \
 	    tmux \
-	    htop
+	    htop \
+			libssl-dev \
+			pkg-config \
+			neovim
 	    
-        sudo apt-get install -y apt-transport-https ca-certificates gnupg
-        sudo apt-get install -y python3 python3-dev python3-venv python3-pip
+			sudo apt-get install -y apt-transport-https ca-certificates gnupg
+			sudo apt-get install -y python3 python3-dev python3-venv python3-pip
 fi
 
 # install python
@@ -35,7 +38,7 @@ fi
 # install node
 echo "Installing node..."
 # installing from source takes too long (especially on aws micro instances) so lets do this instead
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # my config files
@@ -55,20 +58,21 @@ source rust-install.sh -y
 # sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
 # sudo ln -s /usr/local/go/bin/go /usr/bin/go
 
-pip3 install --upgrade pip
-pip3 install -r requirements.txt
+# pip3 install --upgrade pip
+# pip3 install -r requirements.txt
 
 # install neovim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-chmod u+x nvim.appimage
-./nvim.appimage --appimage-extract
-./squashfs-root/AppRun --version
-mv squashfs-root /
-ln -s /squashfs-root/AppRun /usr/bin/nvim
+# sudo apt g
+# curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+# chmod u+x nvim.appimage
+# ./nvim.appimage --appimage-extract
+# ./squashfs-root/AppRun --version
+# mv squashfs-root /
+# ln -s /squashfs-root/AppRun /usr/bin/nvim
 
-cd ~/.vim/plugged/vim-hexokinase
-make hexokinase
-cd -
+# cd ~/.vim/plugged/vim-hexokinase
+# make hexokinase
+# cd -
 
 # install vim-plug and coc plugins
 nvim -s setup.vim

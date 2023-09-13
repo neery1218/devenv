@@ -28,7 +28,6 @@ Plug 'rvmelkonian/move.vim'
 
 Plug 'cakebaker/scss-syntax.vim'
 
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'airblade/vim-rooter'
 call plug#end()
 
