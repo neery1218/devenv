@@ -1,6 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'preservim/nerdtree'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'supermaven-inc/supermaven-nvim'
 Plug 'github/copilot.vim'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -24,7 +26,7 @@ Plug 'shortcuts/no-neck-pain.nvim', { 'tag': '*' }
 
 " Language settings
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'rvmelkonian/move.vim'
+Plug '0xripleys/move.vim'
 
 Plug 'cakebaker/scss-syntax.vim'
 
@@ -34,6 +36,9 @@ call plug#end()
 set termguicolors
 set background=dark
 colorscheme gruvbox
+
+" lua require("supermaven-nvim").setup({})
+" call supermaven-nvim#setup()
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='base16_mocha'
